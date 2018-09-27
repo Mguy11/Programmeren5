@@ -20,7 +20,14 @@
 
             <li class="nav-item ">
                 <a class="nav-link" href="/posts">Blog <span class="sr-only">(current)</span></a>
-        </li>
+            </li>
+
+            <ul class="nav navbar-nav navbar-right">
+                <li class="nav-item ">
+                    <a class="nav-link" href="/posts/create">Create Post <span class="sr-only">(current)</span></a>
+                </li>
+            </ul>
+
             <!--
             <li class="nav-item">
               <a class="nav-link" href="#">Link</a>
