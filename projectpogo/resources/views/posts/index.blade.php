@@ -15,12 +15,13 @@
                                 <p class="card-text">{!!$post->body!!}</p>
                                     <small>Written on {{$post->created_at}}</small> 
                                 </div>
-                                <div class="d-flex justify-content-between align-items-center">
+                                
+                                <!--<div class="d-flex justify-content-between align-items-center">
                                 <div class="btn-group">
                                     <a role="button" class="btn btn-sm btn-outline-secondary" href="/posts/{{$post->id}}">View</a>
                                     <a role="button" class="btn btn-sm btn-outline-secondary" href="#">Edit</a>
                                 </div>
-                            </div>
+                            </div>-->
                           </div>
                         </div>
                       </div>
