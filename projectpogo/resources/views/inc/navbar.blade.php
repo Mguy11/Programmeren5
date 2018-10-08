@@ -10,7 +10,6 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <!-- Left Side Of Navbar -->
             <ul class="navbar-nav mr-auto">
-            @guest
               <li class="nav-item active">
                 <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
               </li>
@@ -28,13 +27,13 @@
               </li>
               
               <ul class="nav navbar-nav navbar-right">
-            @else
+            @auth
                   <li class="nav-item ">
                       <a class="nav-link" href="/posts/create">Create Post <span class="sr-only">(current)</span></a>
                   </li>
               </ul>
             </ul>
-           @endguest
+           @endauth
 
             <!-- Right Side Of Navbar -->
             <ul class="navbar-nav ml-auto">
