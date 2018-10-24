@@ -138,7 +138,7 @@ class PostsController extends Controller
             $path = $request->file('cover_image')->storeAs('public/cover_images', $fileNameToStore);
         } 
 
-        //Create Post
+        //Update Post
         $post = Post::find($id);
         $post->title = $request->input('title');
         $post->body = $request->input('body');
@@ -147,7 +147,7 @@ class PostsController extends Controller
         }
         $post->save();
 
-        return redirect('posts/')->with('success', 'Post Updates');
+        return redirect('posts/')->with('success', 'Post Updated');
     }
 
     /**
