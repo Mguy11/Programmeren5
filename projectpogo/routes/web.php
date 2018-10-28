@@ -22,10 +22,12 @@ Route::get('/users/{id}/{name}', function ($id, $name) {
 Route::get('/', 'PagesController@index');
 Route::get('/about', 'PagesController@about');
 Route::get('/services', 'PagesController@services');
+Route::get('/dashboard', 'DashboardController@index');
+Route::get('/search', 'DashboardController@index');
 
 Route::resource('posts', 'PostsController');
 Route::resource('profiles', 'ProfilesController');
 
 Auth::routes();
 
-Route::get('/dashboard', 'DashboardController@index');
+

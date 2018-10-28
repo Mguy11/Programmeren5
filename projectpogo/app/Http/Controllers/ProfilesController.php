@@ -53,10 +53,11 @@ class ProfilesController extends Controller
             'team' => 'required',
             'city' => 'required',
             'friendcode' => 'required',
-            'profile_images' => 'image|nullable|max:1999'
+            'profile_images' => 'image|nullable|max:1999',
+            'profile_qr' => 'image|nullable|max:1999'
         ]);
 
-        // Handle File Upload
+        // Handle File Upload Profile Image
         if($request->hasFile('profile_image')){
             // Get filename with extension
             $filenameWithExt = $request->file('profile_image')->getClientOriginalName(); 
@@ -72,6 +73,22 @@ class ProfilesController extends Controller
             $fileNameToStore = 'noimage2.jpg';
         }
 
+        // Handle File Upload Profile QR
+        if($request->hasFile('profile_qr')){
+            // Get filename with extension
+            $filenameWithExt2 = $request->file('profile_qr')->getClientOriginalName(); 
+            // Get just filename
+            $filename2 = pathinfo($filenameWithExt2, PATHINFO_FILENAME);
+            // Get just ext
+            $extension2 = $request->file('profile_image')->getClientOriginalExtension();
+            // Filename to store
+            $fileNameToStore2= $filename2.'_'.time().'_'.$extension2;
+            // Upload Image
+            $path2= $request->file('profile_qr')->storeAs('public/profile_qr', $fileNameToStore2);
+        } else {
+            $fileNameToStore2 = 'noimage3.jpg';
+        }
+
         //Create Profile
         $profile = new Profile;
         $profile->name = $request->input('name');
@@ -81,6 +98,7 @@ class ProfilesController extends Controller
         $profile->friendcode = $request->input('friendcode');
         $profile->user_id = auth()->user()->id;
         $profile->profile_image = $fileNameToStore;
+        $profile->profile_qr = $fileNameToStore2;
         $profile->save();
 
         return redirect('profiles/')->with('success', 'Profile Created');
@@ -132,7 +150,7 @@ class ProfilesController extends Controller
             'friendcode' => 'required'
         ]);
 
-        // Handle File Upload
+        // Handle File Upload Profile Image
         if($request->hasFile('profile_image')){
             // Get filename with extension
             $filenameWithExt = $request->file('profile_image')->getClientOriginalName(); 
@@ -146,6 +164,20 @@ class ProfilesController extends Controller
             $path = $request->file('profile_image')->storeAs('public/profile_images', $fileNameToStore);
         } 
 
+         // Handle File Upload Profile QR
+         if($request->hasFile('profile_qr')){
+            // Get filename with extension
+            $filenameWithExt2 = $request->file('profile_qr')->getClientOriginalName(); 
+            // Get just filename
+            $filename2 = pathinfo($filenameWithExt2, PATHINFO_FILENAME);
+            // Get just ext
+            $extension2 = $request->file('profile_qr')->getClientOriginalExtension();
+            // Filename to store
+            $fileNameToStore2 = $filename2.'_'.time().'_'.$extension2;
+            // Upload Image
+            $path2 = $request->file('profile_qr')->storeAs('public/profile_qr', $fileNameToStore2);
+        } 
+
         //Update Profile
         $profile = Profile::find($id);
         $profile->name = $request->input('name');
@@ -155,6 +187,9 @@ class ProfilesController extends Controller
         $profile->friendcode = $request->input('friendcode');
         if($request->hasFile('profile_image')){
             $profile->profile_image = $fileNameToStore;
+        }
+        if($request->hasFile('profile_qr')){
+            $profile->profile_qr = $fileNameToStore2;
         }
         $profile->save();
 
@@ -180,6 +215,12 @@ class ProfilesController extends Controller
         if($profile->profile_image != 'noimage2.jpg'){
             // Delete Image
             Storage::delete('public/profile_images/'.$profile->profile_image);
+
+        }
+
+        if($profile->profile_qr != 'noimage3.jpg'){
+            // Delete Image
+            Storage::delete('public/profile_qr/'.$profile->profile_qr);
 
         }
         

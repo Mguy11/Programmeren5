@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    <h1>Create Profile</h1>
+    <h1>Edit Profile</h1>
     {!! Form::open(['action' => ['ProfilesController@update',$profile->id], 'method' => 'POST', 'enctype' => 'multipart/form-data']) !!}
         <div class="form-group">
             {{Form::label('name', 'Name')}}
@@ -13,7 +13,7 @@
         </div>
         <div class="form-group">
                     {{Form::label('team', 'Team')}}
-                    {{Form::text('team', $profile->team, ['class' => 'form-control', 'placeholder' => 'Red/Blue/Yellow'])}}
+                    {{Form::text('team', $profile->team, ['class' => 'form-control', 'placeholder' => 'Valor/Mystic/Instinct'])}}
         </div>
         <div class="form-group">
                 {{Form::label('city', 'City')}}
@@ -25,6 +25,9 @@
         </div>
         <div class="form-group">
             {{Form::file('profile_image')}}
+        </div>
+        <div class="form-group">
+                {{Form::file('profile_qr')}}
         </div>
         {{Form::hidden('_method', 'PUT')}}
         {{Form::submit('Submit', ['class' => 'btn btn-primary'])}}

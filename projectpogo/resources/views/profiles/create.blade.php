@@ -26,6 +26,9 @@
         <div class="form-group">
             {{Form::file('profile_image')}}
         </div>
+        <div class="form-group">
+                {{Form::file('profile_qr')}}
+        </div>
         {{Form::submit('Submit', ['class' => 'btn btn-primary'])}}
     {!! Form::close() !!}                
 @endsection

@@ -8,7 +8,6 @@
                 @if(count($profiles) > 0)
                 @foreach($profiles as $profile)
                 <div class="row">
-                        <div class="col-md-4">
                             <div class="card mb-4 shadow-sm">
                             <img class="card-img-top" src="/storage/profile_images/{{$profile->profile_image}}" alt="Card image cap">
                             <br>
