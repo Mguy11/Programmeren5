@@ -13,7 +13,7 @@
         </div>
         <div class="form-group">
                     {{Form::label('team', 'Team')}}
-                    {{Form::text('team', '', ['class' => 'form-control', 'placeholder' => 'Red/Blue/Yellow'])}}
+                    {{Form::text('team', '', ['class' => 'form-control', 'placeholder' => 'Valor/Mystic/Instinct'])}}
         </div>
         <div class="form-group">
                 {{Form::label('city', 'City')}}
@@ -24,10 +24,12 @@
                 {{Form::text('friendcode', '', ['class' => 'form-control', 'placeholder' => '0000 0000 0000'])}}
         </div>
         <div class="form-group">
+            {{Form::label('Profile Picture', 'Profile Picture:')}}
             {{Form::file('profile_image')}}
         </div>
         <div class="form-group">
-                {{Form::file('profile_qr')}}
+            {{Form::label('QR-code', 'QR-code:')}}
+            {{Form::file('profile_qr')}}
         </div>
         {{Form::submit('Submit', ['class' => 'btn btn-primary'])}}
     {!! Form::close() !!}                

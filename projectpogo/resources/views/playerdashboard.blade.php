@@ -5,7 +5,7 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">Dashboard</div>
+                <div class="card-header">Profile Overview</div>
 
                     <div class="card-body">
                         @if (session('status'))
@@ -15,22 +15,21 @@
                         @endif
                         
                         <div class="container">
-                            <a href="/posts/create" class="btn btn-primary btn-default">Create Post</a>
-                            <h3>Your Blog Posts</h3>
-                            @if(count($posts) > 0)
+                            <a href="/profiles/create" class="btn btn-primary btn-default">Create Profiile</a>
+                            <h3>Your Profiles</h3>
+                            @if(count($profiles) > 0)
                                 <table class="table table-striped">
                                     <tr>
                                         <th>Title</th>
                                         <th></th>
                                         <th></th>
-                                        <th>Aan/Uit</th>
                                     </tr>
-                                    @foreach ($posts as $post)
+                                    @foreach ($profiles as $profile)
                                         <tr>
-                                            <td>{{$post->title}}</td>
-                                            <td><a href="/posts/{{$post->id}}/edit" class="btn btn-primary btn-default">Edit</a></td>
+                                            <td>{{$profile->name}}</td>
+                                            <td><a href="/profiles/{{$profile->id}}/edit" class="btn btn-primary btn-default">Edit</a></td>
                                             <td>
-                                                {!! Form::open(['action' => ['PostsController@destroy',$post->id], 'method' => 'POST', 'class' => 'pull-right'])!!}
+                                                {!! Form::open(['action' => ['ProfilesController@destroy',$profile->id], 'method' => 'POST', 'class' => 'pull-right'])!!}
                                                     {{Form::hidden('_method', 'DELETE')}}
                                                     {{Form::submit('Delete', ['class' =>'btn btn-danger btn-default'])}}
                                                 {!! Form::close()!!}</td>
@@ -39,7 +38,7 @@
                                     @endforeach
                                 </table>
                             @else
-                                <p>You have no posts.</p>
+                                <p>You have no profiles.</p>
                             @endif
                         </div>
                     </div>
