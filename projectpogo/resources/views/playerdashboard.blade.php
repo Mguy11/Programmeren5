@@ -23,6 +23,7 @@
                                         <th>Title</th>
                                         <th></th>
                                         <th></th>
+                                        <th>Aan/Uit</th>
                                     </tr>
                                     @foreach ($profiles as $profile)
                                         <tr>

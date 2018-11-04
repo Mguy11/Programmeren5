@@ -15,7 +15,7 @@ class PostsController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth', ['except' => ['index', 'show']]);
+        $this->middleware('auth', ['except' => ['index', 'show', 'search']]);
     }
 
     /**
@@ -25,9 +25,9 @@ class PostsController extends Controller
      */
     public function index()
     {
-        /* $post = Post::all();*/
+
         $posts = Post::orderBy('created_at', 'desc')->paginate(9);
-        return view('posts.index')->with('posts', $posts);
+        return view('posts/index')->with('posts', $posts);
     }
 
     /**
@@ -37,7 +37,7 @@ class PostsController extends Controller
      */
     public function create()
     {
-        return view('posts.create');
+        return view('posts/create');
     }
 
     /**
@@ -51,6 +51,7 @@ class PostsController extends Controller
         $this->validate($request, [
             'title' => 'required',
             'body' => 'required',
+            'category' => 'required',
             'cover_image' => 'image|nullable|max:1999'
         ]);
 
@@ -74,6 +75,7 @@ class PostsController extends Controller
         $post = new Post;
         $post->title = $request->input('title');
         $post->body = $request->input('body');
+        $post->category = $request->input('category');
         $post->user_id = auth()->user()->id;
         $post->cover_image = $fileNameToStore;
         $post->save();
@@ -90,7 +92,7 @@ class PostsController extends Controller
     public function show($id)
     {
         $post = Post::find($id);
-        return view('posts.show')->with('post', $post);
+        return view('posts/show')->with('post', $post);
     }
 
     /**
@@ -107,7 +109,7 @@ class PostsController extends Controller
         if(auth()->user()->id !==$post->user_id){
             return redirect('/posts')->with('error', 'Unauthorized Page');
         }
-        return view('posts.edit')->with('post', $post);
+        return view('posts/edit')->with('post', $post);
     }
 
     /**
@@ -121,7 +123,8 @@ class PostsController extends Controller
     {
         $this->validate($request, [
             'title' => 'required',
-            'body' => 'required'
+            'body' => 'required', 
+            'category' => 'required'
         ]);
 
         // Handle File Upload
@@ -142,6 +145,7 @@ class PostsController extends Controller
         $post = Post::find($id);
         $post->title = $request->input('title');
         $post->body = $request->input('body');
+        $post->category = $request->input('category');
         if($request->hasFile('cover_image')){
             $post->cover_image = $fileNameToStore;
         }
@@ -176,4 +180,57 @@ class PostsController extends Controller
 
         return redirect('posts/')->with('success', 'Post Deleted');
     }
+
+    public function search(Request $request)
+        {
+            $search = $request->input('search');
+            $category = $request->input('category');
+
+            if($category !== "All Categories" && empty($search))
+                {
+                    $posts = Post::where('category', "$category")
+                                ->paginate();
+                }
+
+            else if($category !== "All Categories" && empty($search))
+                {
+                    $posts = Post::where('category', "$category")
+                                ->where('title', 'LIKE', "%$search%")
+                                ->orWhere('body', 'LIKE', "%$search%")
+                                ->paginate();
+
+                }
+
+            else
+                {
+                    $posts = Post::where('title', 'LIKE', "%$search%")
+                                ->orWhere('body', 'LIKE', "%$search%")
+                                ->paginate();
+
+                }
+            return view('posts/search')->with('posts', $posts);
+
+         }
+     public function hidePost(Request $request)
+       {
+
+            $hide = $request->input('hide');
+            $id = $request->input('id');
+            
+            $post = Post::find($id);
+            if($hide == "on")
+                {
+                    $post->post_state = 1;
+                    $post->save();
+                }
+            else
+                {
+                    $post->post_state = 0;
+                    $post->save();
+                }
+            
+            
+            return redirect('/posts')->with('success', 'Post Updated');
+       }
+    
 }

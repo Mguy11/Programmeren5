@@ -4,7 +4,7 @@
     <a href="/profiles" class="btn btn-primary btn-default">Terug</a>
     <hr>
     <div class="container">
-        <img class="card-img-top" style="width:25% height:25%" src="/storage/profile_images/{{$profile->profile_image}}" alt="Card image cap">
+        <img class="card-img-top" style="Height:25%" src="/storage/profile_images/{{$profile->profile_image}}" alt="Card image cap">
     </div>
     <h1>{{$profile->name}}</h1>
     <div class="container">

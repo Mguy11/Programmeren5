@@ -17,27 +17,39 @@
                         <div class="container">
                             <a href="/posts/create" class="btn btn-primary btn-default">Create Post</a>
                             <h3>Your Blog Posts</h3>
+
+                            
                             @if(count($posts) > 0)
                                 <table class="table table-striped">
                                     <tr>
                                         <th>Title</th>
                                         <th></th>
                                         <th></th>
-                                        <th>Aan/Uit</th>
+                                        <th>Hide</th>
                                     </tr>
                                     @foreach ($posts as $post)
                                         <tr>
                                             <td>{{$post->title}}</td>
                                             <td><a href="/posts/{{$post->id}}/edit" class="btn btn-primary btn-default">Edit</a></td>
                                             <td>
-                                                {!! Form::open(['action' => ['PostsController@destroy',$post->id], 'method' => 'POST', 'class' => 'pull-right'])!!}
+                                                {!! Form::open(['action' => ['PostsController@destroy', $post->id], 'method' => 'POST', 'class' => 'pull-right'])!!}
                                                     {{Form::hidden('_method', 'DELETE')}}
                                                     {{Form::submit('Delete', ['class' =>'btn btn-danger btn-default'])}}
                                                 {!! Form::close()!!}</td>
-                                            <td><input type="checkbox" checked data-toggle="toggle"><td>
+                                            <td>
+                                                <form action="{{action('PostsController@hidePost')}}", method="POST", enctype="multipart/form-date">
+                                                <label class="switch">
+                                                    {{csrf_field()}}
+                                                    <input type="hidden" name="id" value="{{$post->id}}">
+                                                    <input type="checkbox" name="hide" <?php if($post->post_state == 1){ ?> checked <?php } ?>>
+                                                    <span class="slider round"></span>     
+                                                </label>
+                                            <td>
                                         </tr>
                                     @endforeach
                                 </table>
+                                <button class="" type="submit">Save</button>
+                            </form>
                             @else
                                 <p>You have no posts.</p>
                             @endif

@@ -9,22 +9,17 @@
 | routes are loaded by the RouteServiceProvider within a group which
 | contains the "web" middleware group. Now create something great!
 |
-*/
-
-/*
-
-Route::get('/users/{id}/{name}', function ($id, $name) {
-    return 'This is user ' .$id. 'with name';
-});
-
-*/
+*/  
 
 Route::get('/', 'PagesController@index');
 Route::get('/about', 'PagesController@about');
 Route::get('/services', 'PagesController@services');
 Route::get('/dashboard', 'DashboardController@index');
 Route::get('/playerdashboard', 'PlayerDashboardController@index');
-Route::get('/search', 'DashboardController@index');
+Route::get('/search', 'PostsController@search')->name('search');
+Route::get('/admin', 'AdminController@admin')->middleware('is_Admin')->name('admin');
+
+Route::post('/dashboard', ['uses' => 'PostsController@hidePost']);
 
 Route::resource('posts', 'PostsController');
 Route::resource('profiles', 'ProfilesController');
