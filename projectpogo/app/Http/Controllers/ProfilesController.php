@@ -228,4 +228,26 @@ class ProfilesController extends Controller
 
         return redirect('profiles/')->with('success', 'Profile Deleted');
     }
+
+    public function search(Request $request)
+        {
+            $search = $request->input('search');
+
+            if(empty($search))
+                {
+                    $profiles = Profile::orderBy('created_at', 'desc')->paginate(4);
+                    return view('profiles/index')->with('profiles', $profiles);
+                }
+            else
+                {
+                    $profiles = Profile::where('name', 'LIKE', "%$search%")
+                                ->orWhere('level', 'LIKE', "%$search%")
+                                ->orWhere('team', 'LIKE', "%$search%")
+                                ->orWhere('City', 'LIKE', "%$search%")
+                                ->paginate(9);
+
+                }
+            return view('profiles/search')->with('profiles', $profiles);
+
+         }
 }

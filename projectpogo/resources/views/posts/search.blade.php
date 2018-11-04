@@ -3,7 +3,7 @@
 @section('content')
 
 
-        <form action="{{route('search')}}" method="GET" class="search-form">
+        <form action="posts/search" method="GET" class="search-form">
             <label for="search">Search on Title:</label>
             <br>
             <input type="text" name="search" class="from-control" id="search">

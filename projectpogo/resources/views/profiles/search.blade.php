@@ -1,21 +1,18 @@
 @extends('layouts.app')
 
 @section('content')
-    <br>
-    <form action="{{route('search')}}" method="GET" class="search-form">
-        <div class="container">
+
+    <form action="profiles/search" method="GET" class="search-form">
         <label for="search">Search on Name:</label>
         <br>
         <input type="text" name="search" class="from-control" id="search">
         <br>
         <button class="" type="submit">Search</button>
     </form>
-</div>
-    <br>
-    <h1>Players</h1>
-    <div class="album py-5 bg-light">
-            <div class="container">
 
+    <hr>
+            <div class="search-container">
+            <h1>Results</h1>
                 @if(count($profiles) > 0)
                 <div class="row">
                     @foreach($profiles as $profile)
@@ -28,9 +25,6 @@
                                             <p><b>Level:</b> {{$profile->level}}</p>
                                             <p><b>Friendcode:</b> {{$profile->friendcode}}</p>
                                             <small>Team <b>{{$profile->team}}</b> uit  <b>{{$profile->city}}</b></small>
-                                            <br>
-                                            <a class="btn btn-primary" href="/profiles/{{$profile->id}}">Add</a>
-                                            <hr>
                                         </div>
                                 </div>
                             </div>
@@ -40,6 +34,5 @@
                 @else 
                     <p>No Players found</p>
                 @endif
-            </div>
-    </div>       
+            </div>      
 @endsection

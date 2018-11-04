@@ -17,7 +17,8 @@ Route::get('/services', 'PagesController@services');
 Route::get('/dashboard', 'DashboardController@index');
 Route::get('/playerdashboard', 'PlayerDashboardController@index');
 Route::get('/search', 'PostsController@search')->name('search');
-Route::get('/admin', 'AdminController@admin')->middleware('is_Admin')->name('admin');
+Route::get('/search', 'ProfilesController@search')->name('search');
+Route::get('/admin', 'AdminController@admin')->middleware('is_admin')->name('admin');
 
 Route::post('/dashboard', ['uses' => 'PostsController@hidePost']);
 

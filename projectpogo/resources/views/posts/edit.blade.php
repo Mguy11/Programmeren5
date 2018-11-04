@@ -28,6 +28,17 @@
                {{Form::file('cover_image')}}
         </div>
 
+        <div class="form-group">
+                <form action="{{action('PostsController@hidePost')}}", method="POST", enctype="multipart/form-date">
+                    <label class="switch">
+                        {{csrf_field()}}
+                        <input type="hidden" name="id" value="{{$post->id}}">
+                        <input type="checkbox" name="hide" <?php if($post->post_state == 1){ ?> checked <?php } ?>>
+                        <span class="slider round"></span>     
+                    </label>
+                
+        </div>
+
         {{Form::hidden('_method', 'PUT')}}
         {{Form::submit('Submit', ['class' => 'btn btn-primary'])}}
     {!! Form::close() !!}                

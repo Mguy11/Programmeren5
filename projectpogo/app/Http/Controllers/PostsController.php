@@ -149,6 +149,16 @@ class PostsController extends Controller
         if($request->hasFile('cover_image')){
             $post->cover_image = $fileNameToStore;
         }
+        $hide = $request->input('hide');
+        
+        if($hide == "on")
+        {
+            $post->post_state = 1;
+        }
+        else
+        {
+            $post->post_state = 0;
+        }
         $post->save();
 
         return redirect('posts/')->with('success', 'Post Updated');
@@ -189,7 +199,7 @@ class PostsController extends Controller
             if($category !== "All Categories" && empty($search))
                 {
                     $posts = Post::where('category', "$category")
-                                ->paginate();
+                                ->paginate(9);
                 }
 
             else if($category !== "All Categories" && empty($search))
@@ -197,15 +207,20 @@ class PostsController extends Controller
                     $posts = Post::where('category', "$category")
                                 ->where('title', 'LIKE', "%$search%")
                                 ->orWhere('body', 'LIKE', "%$search%")
-                                ->paginate();
+                                ->paginate(9);
 
+                }
+            else if($category == "All Categories")
+                {
+                    $posts = Post::where('category', "$category")
+                                ->paginate(9);
                 }
 
             else
                 {
                     $posts = Post::where('title', 'LIKE', "%$search%")
                                 ->orWhere('body', 'LIKE', "%$search%")
-                                ->paginate();
+                                ->paginate(9);
 
                 }
             return view('posts/search')->with('posts', $posts);
@@ -214,20 +229,7 @@ class PostsController extends Controller
      public function hidePost(Request $request)
        {
 
-            $hide = $request->input('hide');
-            $id = $request->input('id');
             
-            $post = Post::find($id);
-            if($hide == "on")
-                {
-                    $post->post_state = 1;
-                    $post->save();
-                }
-            else
-                {
-                    $post->post_state = 0;
-                    $post->save();
-                }
             
             
             return redirect('/posts')->with('success', 'Post Updated');

@@ -10,17 +10,16 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <!-- Left Side Of Navbar -->
             <ul class="navbar-nav mr-auto">
-              <li class="nav-item active">
+              <li class="nav-item">
                 <a class="nav-link" href="/">Home <span class="sr-only"></span></a>
               </li>
-              
-              <!--<li class="nav-item ">
-                <a class="nav-link" href="/about">About <span class="sr-only"></span></a>
-              </li>
-
-              <li class="nav-item ">
-                      <a class="nav-link" href="/services">Services <span class="sr-only">(current)</span></a>
-              </li>-->
+              @if(!Auth::guest())
+                @if(Auth::user()->isAdmin())
+                <li class="nav-item ">
+                    <a class="nav-link" href="{{route('admin')}}">Admin Dashboard <span class="sr-only"></span></a>
+                </li>
+                @endif
+              @endif
 
               <li class="nav-item ">
                   <a class="nav-link" href="/posts">Posts <span class="sr-only"></span></a>
@@ -78,10 +77,6 @@
 
                     </li>
                 @endif
-                <form class="form-inline my-2 my-lg-0" action="{{URL::to('/search')}}" method="POST" role="search">
-                    <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
-                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-                  </form>
             </ul>
         </div>
     
